@@ -1,0 +1,54 @@
+swagger: "2.0"
+info:
+  title: "qwer"
+  version: "Qwer"
+schemes:
+- http
+- https
+host: localhost:8080
+paths:
+  /services:
+    post:
+      summary: Create a Service
+      operationId: createService
+      description: Create a Service
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Service
+        description: Service to create
+        schema:
+          $ref: '#/definitions/Service'
+      responses:
+        200:
+          description: OK
+    get:
+      summary: Read All Services
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceList'
+definitions:
+  Service:
+    type: object
+    properties:
+      appname:
+        type: string
+      language:
+        type: string
+        enum:
+        - java
+        - node
+        - python
+        - perl
+        - go
+        - nginx
+        - busybox
+  ServiceList:
+    type: array
+    items:
+      $ref: '#/definitions/Service'
