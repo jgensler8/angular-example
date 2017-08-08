@@ -1,6 +1,7 @@
-import { Component, Injectable } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { Service, ServiceList, DefaultApi } from './swagger';
+import { Component, Injectable, ReflectiveInjector } from '@angular/core';
+import { BaseRequestOptions, Http, HttpModule } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+import { Service, ServiceList, DefaultApi, Configuration } from './swagger';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -9,10 +10,13 @@ import 'rxjs/add/observable/of';
 class MockDefaultApi extends DefaultApi {
   servicesGet(extraHttpRequestParams?: any): Observable<ServiceList> {
     var list = new Array<Service>();
+    list = list.concat({
+      appname: "AppName",
+      language: Service.LanguageEnum.Java
+    });
     return Observable.of(list);
   }
 }
-let mockDefaultApi = new MockDefaultApi();
 
 @Component({
   selector: 'app-root',
@@ -30,7 +34,7 @@ let mockDefaultApi = new MockDefaultApi();
   <div id="heatmap"></div>
   `,
   // styleUrls: ['./app.component.css']
-  providers: [DefaultApi]
+  providers: [MockDefaultApi]
 })
 export class AppComponent {
   title = "Title";
@@ -38,7 +42,7 @@ export class AppComponent {
     appname: "qwer",
     language: Service.LanguageEnum.Java
   };
-  constructor(private api: DefaultApi) {};
+  constructor(private api: MockDefaultApi) {};
   onSelect(s: Service): void {
     // this.title = "BOUND TO " + s.appname + "zzzzzzzz";
     var now = new Date();
@@ -49,6 +53,12 @@ export class AppComponent {
     var datas = [
       {date: now.getTime() / 1000, value: 20}
     ];
+    var datas = this.api.servicesGet();
+    datas.forEach(function(x: ServiceList) {
+      x.forEach(function(s: Service){
+        console.log(s.appname);
+      })
+    })
     this.cal.init({
       data: datas,
       itemSelector: "#heatmap",

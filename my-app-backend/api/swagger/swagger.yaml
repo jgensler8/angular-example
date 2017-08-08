@@ -7,48 +7,96 @@ schemes:
 - https
 host: localhost:8080
 paths:
-  /services:
-    post:
-      summary: Create a Service
-      operationId: createService
-      description: Create a Service
-      produces:
-      - application/json
-      parameters:
-      - in: body
-        name: Service
-        description: Service to create
-        schema:
-          $ref: '#/definitions/Service'
-      responses:
-        200:
-          description: OK
+  /alerts:
     get:
-      summary: Read All Services
+      summary: Read All Alerts
       produces:
       - application/json
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/ServiceList'
+            $ref: '#/definitions/AlertList'
 definitions:
-  Service:
+# {
+#     "tags": [ ],
+#     "count": 1,
+#     "status": "closed",
+#     "teams":["operations", "developers"]
+#     "recipients": [
+#         "kili@opsgenie.com"
+#     ],
+#     "tinyId": "324",
+#     "alias": "host_down",
+#     "entity": ""
+#     "id": "ac463592-dbd2-4ca3-a333d-48fhf5j5c871",
+#     "updatedAt": 1349698149317,
+#     "message": "WebServer3 is down",
+#     "details": {
+#         "ip": "192.168.1.87"
+#     },
+#     "source": "fili@opsgenie.com",
+#     "description": "WebServer3 is down due to failure in WAN-1 connection.",
+#     "createdAt": 1349698149317,
+#     "isSeen":true,
+#     "acknowledged":true,
+#     "snoozed":false,
+#     "owner":"kili@opsgenie.com",
+#     "actions": [ ],
+#     "systemData": {
+#         "integrationType": "API",
+#         "integrationId": "95225ed3-03fb-4cdd-a035-44052d6f4496",
+#         "integrationName": "API",
+#         "ackTime":18171,
+#         "acknowledgedBy":"kili@opsgenie.com",
+#         "closeTime":24737,
+#         "closedBy":"fili@opsgenie.com"
+#     }
+# }
+  Alert:
     type: object
     properties:
-      appname:
+      id:
         type: string
-      language:
+      count:
+        type: integer
+      alias:
         type: string
-        enum:
-        - java
-        - node
-        - python
-        - perl
-        - go
-        - nginx
-        - busybox
-  ServiceList:
+      message:
+        type: string
+      status:
+        type: string
+      isSeen:
+        type: boolean
+      acknowledged:
+        type: boolean
+      snoozed:
+        type: boolean
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      tinyId:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      owner:
+        type: string
+      teams:
+        type: array
+        items:
+          type: string
+      recipients:
+        type: array
+        items:
+          type: string
+      entity:
+        type: string
+      details:
+        type: object
+  AlertList:
     type: array
     items:
-      $ref: '#/definitions/Service'
+      $ref: '#/definitions/Alert'
