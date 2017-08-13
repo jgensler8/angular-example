@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  title: "qwer"
-  version: "Qwer"
+  title: "Alert Grapher"
+  version: "v1.0.0"
 schemes:
 - http
 - https
@@ -18,41 +18,6 @@ paths:
           schema:
             $ref: '#/definitions/AlertList'
 definitions:
-# {
-#     "tags": [ ],
-#     "count": 1,
-#     "status": "closed",
-#     "teams":["operations", "developers"]
-#     "recipients": [
-#         "kili@opsgenie.com"
-#     ],
-#     "tinyId": "324",
-#     "alias": "host_down",
-#     "entity": ""
-#     "id": "ac463592-dbd2-4ca3-a333d-48fhf5j5c871",
-#     "updatedAt": 1349698149317,
-#     "message": "WebServer3 is down",
-#     "details": {
-#         "ip": "192.168.1.87"
-#     },
-#     "source": "fili@opsgenie.com",
-#     "description": "WebServer3 is down due to failure in WAN-1 connection.",
-#     "createdAt": 1349698149317,
-#     "isSeen":true,
-#     "acknowledged":true,
-#     "snoozed":false,
-#     "owner":"kili@opsgenie.com",
-#     "actions": [ ],
-#     "systemData": {
-#         "integrationType": "API",
-#         "integrationId": "95225ed3-03fb-4cdd-a035-44052d6f4496",
-#         "integrationName": "API",
-#         "ackTime":18171,
-#         "acknowledgedBy":"kili@opsgenie.com",
-#         "closeTime":24737,
-#         "closedBy":"fili@opsgenie.com"
-#     }
-# }
   Alert:
     type: object
     properties:
@@ -73,9 +38,9 @@ definitions:
       snoozed:
         type: boolean
       createdAt:
-        type: string
+        type: integer
       updatedAt:
-        type: string
+        type: integer
       tinyId:
         type: string
       tags:
@@ -96,7 +61,37 @@ definitions:
         type: string
       details:
         type: object
+      source:
+        type: string
+      description:
+        type: string
+      # actions:
+      #   type: array
+      #   items:
+      #     type: object
+      #     properties:
+      #       key:
+      #         type: string
+      systemData:
+        $ref: '#/definitions/SystemData'
   AlertList:
     type: array
     items:
       $ref: '#/definitions/Alert'
+  SystemData:
+    type: object
+    properties:
+      integrationType:
+        type: string
+      integrationId:
+        type: string
+      integrationName:
+        type: string
+      ackTime:
+        type: integer
+      acknowledgedBy:
+        type: string
+      closeTime:
+        type: integer
+      closedBy:
+        type: string
