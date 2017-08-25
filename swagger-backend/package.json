@@ -1,0 +1,12 @@
+{
+  "name": "swagger-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "swagger": "swagger-codegen generate -i ../my-app-backend/api/swagger/swagger.yaml -l nodejs-server -o ./src/swagger"
+  },
+  "author": "",
+  "license": "ISC"
+}

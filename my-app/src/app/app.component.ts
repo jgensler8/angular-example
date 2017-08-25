@@ -1,30 +1,24 @@
 import { Component, Injectable, ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, Http, HttpModule } from '@angular/http';
 // import { MockBackend } from '@angular/http/testing';
-import { Alert, AlertList, DefaultApi, Configuration } from './swagger';
+import { Alert, DefaultApi, Configuration } from './swagger';
 import { MockDefaultApi } from './swagger_mock';
 import { Environment } from './environment';
 
+var env = new Environment();
+
 @Component({
   selector: 'app-root',
-  // templateUrl: './app.component.html',
   template: `
   <h1>{{title}}</h1>
   <div><input type="button" (click)="onSelect()">click me</div>
   <div id="heatmap"></div>
   `,
-  // styleUrls: ['./app.component.css']
   providers: [
     {
       provide: DefaultApi,
-      deps: [Http, Environment],
-      useFactory: function(http: Http, env: Environment){
-        if(env.environment().shouldMockApi){
-          return <DefaultApi> new MockDefaultApi(http);
-        } else {
-          return new DefaultApi(http, "", null);
-        }
-      }
+      deps: [Http],
+      useClass: env.environment().shouldMockApi ? MockDefaultApi : DefaultApi,
     }
   ]
 })
@@ -48,7 +42,7 @@ export class AppComponent {
           range: 4,
           domain: "day",
           subDomain: "hour",
-          afterLoadData: (data: AlertList) =>
+          afterLoadData: (data: Array<Alert>) =>
           {
             var stats: CalHeatMap.DataFormat = {};
             console.log(data);

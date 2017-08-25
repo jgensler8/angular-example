@@ -1,126 +1,123 @@
+---
 swagger: "2.0"
 info:
-  title: "Alert Grapher"
   version: "v1.0.0"
+  title: "Alert Grapher"
+host: "localhost"
+basePath: "/api"
 schemes:
-- http
-- https
-host: localhost
-basePath: /api
+- "http"
+- "https"
 paths:
   /alerts:
     get:
-      summary: Read All Alerts
+      summary: "Read All Alerts"
+      operationId: "alertsGET"
       produces:
-      - application/json
+      - "application/json"
+      parameters: []
       responses:
         200:
-          description: OK
+          description: "OK"
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: '#/definitions/Alert'
+              $ref: "#/definitions/Alert"
+      x-swagger-router-controller: "Default"
 definitions:
   Alert:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
         example: "ac463592-dbd2-4ca3-a333d-48fhf5j5c871"
       count:
-        type: integer
+        type: "integer"
         example: 1
       alias:
-        type: string
+        type: "string"
         example: "host_down"
       message:
-        type: string
+        type: "string"
         example: "WebServer3 is down"
       status:
-        type: string
+        type: "string"
         example: "closed"
       isSeen:
-        type: boolean
+        type: "boolean"
         example: true
       acknowledged:
-        type: boolean
+        type: "boolean"
         example: true
       snoozed:
-        type: boolean
+        type: "boolean"
         example: false
       createdAt:
-        type: integer
+        type: "integer"
         example: 1349698149317
       updatedAt:
-        type: integer
+        type: "integer"
         example: 1349698149317
       tinyId:
-        type: string
+        type: "string"
         example: "324"
       tags:
-        type: array
+        type: "array"
         items:
-          type: string
+          type: "string"
       owner:
-        type: string
+        type: "string"
         example: "kili@opsgenie.com"
       teams:
-        type: array
-        items:
-          type: string
+        type: "array"
         example:
         - "operations"
         - "developers"
-      recipients:
-        type: array
         items:
-          type: string
+          type: "string"
+      recipients:
+        type: "array"
         example:
         - "kili@opsgenie.com"
+        items:
+          type: "string"
       entity:
-        type: string
+        type: "string"
         example: ""
       details:
-        type: object
-        example: {
-          "ip": "192.168.1.87"
-        }
+        type: "object"
+        example:
+          ip: "192.168.1.87"
+        properties: {}
       source:
-        type: string
+        type: "string"
         example: "fili@opsgenie.com"
       description:
-        type: string
+        type: "string"
         example: "WebServer3 is down due to failure in WAN-1 connection."
-      # actions:
-      #   type: array
-      #   items:
-      #     type: object
-      #     properties:
-      #       key:
-      #         type: string
       systemData:
-        $ref: '#/definitions/SystemData'
+        $ref: "#/definitions/SystemData"
   SystemData:
-    type: object
+    type: "object"
     properties:
       integrationType:
-        type: string
+        type: "string"
         example: "API"
       integrationId:
-        type: string
+        type: "string"
         example: "95225ed3-03fb-4cdd-a035-44052d6f4496"
       integrationName:
-        type: string
+        type: "string"
         example: "API"
       ackTime:
-        type: integer
+        type: "integer"
         example: 18171
       acknowledgedBy:
-        type: string
+        type: "string"
         example: "kili@opsgenie.com"
       closeTime:
-        type: integer
+        type: "integer"
         example: 24737
       closedBy:
-        type: string
+        type: "string"
         example: "fili@opsgenie.com"

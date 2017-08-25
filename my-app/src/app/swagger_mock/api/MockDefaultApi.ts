@@ -1,7 +1,7 @@
 import { Component, Injectable, ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, Http, HttpModule } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { DefaultApi, Alert, AlertList } from '../../swagger';
+import { DefaultApi, Alert } from '../../swagger';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -13,7 +13,7 @@ export class MockDefaultApi extends DefaultApi {
     super(http, "", null);
   }
 
-  alertsGet(extraHttpRequestParams?: any): Observable<AlertList> {
+  alertsGet(extraHttpRequestParams?: any): Observable<Array<Alert>> {
     var list = new Array<Alert>();
 
     // var datas = [
